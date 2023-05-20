@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwt.freecloud.dao.FileRecycleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jwt.freecloud.common.entity.FileRecycle">
+        <id column="recycle_id" property="recycleId" />
+        <result column="delete_user_id" property="deleteUserId" />
+        <result column="delete_time" property="deleteTime" />
+        <result column="clear_time" property="clearTime" />
+        <result column="auto_flag" property="autoFlag" />
+    </resultMap>
+    <select id="listPage" resultType="com.jwt.freecloud.common.dto.RecycleDTO">
+        select * from file_recycle r
+        join file_recycle_item ri
+        on r.recycle_id = ri.recycle_id
+        where r.delete_user_id = #{userId} and ri.status = 0
+        order by r.delete_time desc
+        limit #{page},#{pageSize}
+    </select>
+
+</mapper>

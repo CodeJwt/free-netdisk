@@ -1,0 +1,26 @@
+//GET /free_cloud/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "term": {
+            "userId": "VALUE(int)"
+          }
+        },
+        {
+          "term": {
+            "status": 0
+          }
+        }
+      ],
+      "must": [
+        {
+          "match": {
+            "fileName": "VALUE(text)"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+//PUT /free_cloud
+{
+  "mappings": {
+    "properties": {
+      "fileId": {
+        "type": "long",
+        "index": false
+      },
+      "userId": {
+        "type": "integer"
+      },
+      "fileName": {
+        "type": "text",
+        "analyzer": "ik_max_word"
+      },
+      "fileExtName": {
+        "type": "keyword",
+        "index": false
+      },
+      "filePath": {
+        "type": "keyword",
+        "index": false
+      },
+      "status": {
+        "type": "integer"
+      },
+      "dirFlag": {
+        "type": "integer",
+        "index": false
+      },
+      "fileSize": {
+        "type": "long",
+        "index": false
+      },
+      "createTime": {
+        "type": "text",
+        "index": false
+      },
+      "updateTime": {
+        "type": "text",
+        "index": false
+      }
+    }
+  }
+}

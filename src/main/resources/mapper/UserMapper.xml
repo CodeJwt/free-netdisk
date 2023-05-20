@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwt.freecloud.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jwt.freecloud.common.entity.User">
+        <id column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="nickname" property="nickname" />
+        <result column="sex" property="sex" />
+        <result column="real_name" property="realName" />
+        <result column="reg_time" property="regTime" />
+        <result column="total_memory" property="totalMemory" />
+        <result column="base_memory" property="baseMemory" />
+        <result column="activities_memory" property="activitiesMemory" />
+        <result column="pay_memory" property="payMemory" />
+        <result column="used_memory" property="usedMemory" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="user_status" property="userStatus" />
+        <result column="profile_photo" property="profilePhoto" />
+    </resultMap>
+
+    <update id="updateUsedMemory">
+        update user set used_memory = #{usedMemory} where user_id = #{userId}
+    </update>
+
+    <select id="getListByIds" resultType="com.jwt.freecloud.common.entity.User">
+        select user_id, reg_time from user
+        where user_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

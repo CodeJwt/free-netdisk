@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwt.freecloud.dao.FileUserOriginMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jwt.freecloud.common.entity.FileUserOrigin">
+        <id column="id" property="id" />
+        <result column="file_id" property="fileId" />
+        <result column="origin_id" property="originId" />
+    </resultMap>
+
+    <select id="hasFileRelation" resultType="com.jwt.freecloud.common.entity.FileUserOrigin">
+        select origin_id from file_user_origin where origin_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteBatchByIds" parameterType="java.util.List">
+        delete from file_user_origin where
+        <foreach collection="list" item="item" separator="or" index="index">
+            origin_id = #{item.originId} and file_id = #{item.fileId}
+        </foreach>
+    </delete>
+</mapper>

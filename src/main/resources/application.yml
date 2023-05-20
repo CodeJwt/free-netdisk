@@ -1,0 +1,110 @@
+server:
+  port: 8088
+  #访问路径
+#  servlet:
+#    context-path: /free
+
+spring:
+  datasource:
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      username: root
+      password: root
+      #对于8.0.13和以后的版本，如果设置了characterEncoding=UTF-8，他会映射到MYSQL的utf8mb4字符集。
+      url: jdbc:mysql://192.168.10.132:3306/free_cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+      #url: jdbc:mysql://localhost:3306/cloud?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+      #最大连接池数量
+      max-active: 20
+      #初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
+      initial-size: 10
+      # 获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，
+      # 并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+      max-wait: 60000
+      #最小连接池数量
+      min-idle: 5
+      #有两个含义：
+      #1: Destroy线程会检测连接的间隔时间
+      #2: testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 180000
+      #是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。
+      pool-prepared-statements: false
+
+  Servlet:
+    multipart:
+      #单个文件大小限制
+      max-file-size: 1024MB
+      #总文件大小限制
+      max-request-size: 2048MB
+      #是否开启SpringMVC上传功能
+      enabled: true
+
+  #session存在redis中
+  session:
+    store-type: redis
+
+  #全局配置返回字符串
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+  redis:
+    host: 192.168.10.132
+    port: 6379
+    timeout: 3000
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+
+
+  rabbitmq:
+    host: 192.168.10.132
+    port: 5672
+    username: root
+    password: root
+    virtual-host: /
+    #确认消息已发送到交换机(Exchange)
+    publisher-confirm-type: correlated
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 1
+        retry:
+          max-attempts: 2
+          enabled: true
+
+  banner:
+    location: /banner/banner2.txt
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+minio:
+  enabled: true
+  endpoint: http://192.168.10.132:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  default-bucket-name: free-cloud
+
+pool:
+  core-size: 5
+  max-size: 30
+  keep-alive-time: 60
+
+logging:
+  level:
+    com.jwt.freecloud: error
+    com.jwt.freecloud.scheduled: info
+  file:
+    name: logs/free-cloud.log

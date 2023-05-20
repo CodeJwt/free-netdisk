@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwt.freecloud.dao.FileRecycleItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jwt.freecloud.common.entity.FileRecycleItem">
+        <id column="item_id" property="itemId" />
+        <result column="recycle_id" property="recycleId" />
+        <result column="file_id" property="fileId" />
+        <result column="origin_id" property="originId" />
+        <result column="dir_flag" property="dirFlag" />
+        <result column="file_name" property="fileName" />
+        <result column="file_ext_name" property="fileExtName" />
+        <result column="file_size" property="fileSize" />
+        <result column="status" property="status" />
+    </resultMap>
+    <select id="getItemsByRecycleId" resultType="com.jwt.freecloud.common.entity.FileRecycleItem">
+        select item_id, recycle_id, file_id, origin_id, dir_flag, file_name, status from file_recycle_item
+        where recycle_id = #{recycleId}
+    </select>
+
+
+</mapper>
